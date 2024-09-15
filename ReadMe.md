@@ -1,4 +1,4 @@
-# HFIS XAI
+# HIFIS XAI
 
 This project introduces a machine learning approach to predict the number of nights a client is likely to spend at homeless shelters within the next six months. It draws inspiration from a previous study conducted in London, Ontario, where researchers used the HIFIS dataset to predict whether a client would experience chronic homelessness within six months, achieving promising results. However, our project aims to enhance that model in the following ways:
 
@@ -14,7 +14,7 @@ To use this tool, follow these steps:
    1. [Required Packages](#required-packages)
    2. [PyTorch](#pytorch)
 
-2. [Configure `config.yaml`](#setup)
+2. [Configure `config.yml`](#setup)
 
 3. [Run preprocessing (excluding the most recent 6 months)](#preprocess)
 
