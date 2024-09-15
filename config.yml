@@ -1,0 +1,116 @@
+PATHS:
+  DATA:
+    RAW:
+      HIFIS: "data/raw/HIFIS/HIFIS-Clients.csv"
+      LOOKUPS: "data/raw/HIFIS/HIFIS-Clients-Lookups.xlsx"
+      EXTERNAL:
+        CPI: "data/raw/external/CPI/cpi.csv"
+        UNEMPLOYMENT: "data/raw/external/unemployment_rate/unemployment.csv"
+        GDP: "data/raw/external/GDP/gdp.csv"
+        BORDER_CROSSINGS: "data/raw/external/border_crossings/irregular_border_crossings.csv"
+        RENT: "data/raw/external/rent/rent.csv"
+        WEATHER: "data/raw/external/weather/weather.csv"
+    PROCESSED: "data/processed/HIFIS-processed.csv"
+    INFERENCE: "data/processed/HIFIS-infer-processed.csv"
+  COMPONENTS:
+    SCALER: "data/components/scalers/"
+  MODEL:
+    CHECKPOINTS: "ckpt/"
+  EXPLAINABILITY:
+    SHAP:
+      PLOTS: "explainability/shap/"
+      SUMMARY: "explainability/shap/summary_plot.png"
+  INFERENCE:
+    CLIENT_LIST: "client_list.yml"
+    RESULTS: "results/results.csv"
+
+PREPROCESS:
+  MEREGE_LOOKUPS:
+    COLUMNS_TO_DROP:
+      [
+        "ReasonForDischargeID",
+        "BehavioralType",
+        "HealthIssueType",
+        "IncomeType",
+        "SPDATScore",
+        "NumOfServices",
+        "EducationLevel",
+      ]
+
+  EXTERNAL_FEATS:
+    WEATHER: ["tempmin", "precip", "snow", "snowdepth", "windgust", "windspeed"]
+
+  ONE_HOT_ENCODING:
+    COLUMNS_TO_ENCODE:
+      [
+        "Gender",
+        "AboriginalIndicator",
+        "VeteranStatus",
+        "Citizenship",
+        "ReasonForService",
+        "ReasonForDischarge",
+        "OrganizationName",
+      ]
+
+  AGGREGATION:
+    CLIENT_LEVEL_FEATS:
+      [
+        "VeteranStatus",
+        "AboriginalIndicator",
+        "Gender",
+        "Citizenship",
+        "IsChronic",
+        "HasFamily",
+      ]
+    VISIT_LEVEL_FEATS:
+      ["ReasonForService", "ReasonForDischarge", "OrganizationName"]
+
+  SLIDING_WINDOW:
+    START_DATE: "2020-01-01"
+    WINDOW_SIZE: 6 # in months
+    WINDOW_STEP: 1 # in months
+
+  GT:
+    DURATION: 6 # in months
+
+  PARALLEL_COMPUTING:
+    N_PROCESS: 26
+
+TRAIN:
+  WANDB:
+    PROJECT_NAME: "hifis_xai" # WandB project name
+    EXP: "SEPT-2024" # Experiment name for WandB run
+
+  BATCH_SIZE: 1024
+  NUM_WORKERS: 4
+  EPOCHS: 100
+  LEARNING_RATE: 0.001
+  EARLY_STOPPING_PATIENCE: 5
+
+  MODEL:
+    MLP_HIDDEN_DIM: 32
+    MLP_N_HIDDEN: 6
+    LSTM_HIDDEN_DIM: 4
+    LSTM_N_HIDDEN: 1
+    NUM_TS_FEATS: 12
+    TS_SEQ_LEN: 6
+    DROPOUT_PROB: 0.1
+    CHRONIC_THRESHOLD: 120.0
+
+  ACCELERATOR: "gpu" # 'cpu' or 'gpu'
+  STRATEGY: "auto" # please refer to pytorch lightning documentation for all available options
+
+  NESTED_KFOLD:
+    N_ITERS: 10
+
+INFERENCE:
+  START_DATE: "2020-01-01"
+  CKPT_PATH: "ckpt/SEPT-2024_single_train-epoch=9-val_loss=268.11.ckpt"
+  SCALER_PATH: "data/components/scalers/0.pkl"
+
+EXPLAINABILITY:
+  SHAP:
+    CKPT_DIR: "ckpt/SHAP_AVG/"
+    OUTPUT_DIR: "explainability/shap/shap_values/avg"
+    RUN_NAME: "SEPT-2024"
+    AVG_SUMMARY_PLOT: "explainability/shap/summary_plot_avg.png"

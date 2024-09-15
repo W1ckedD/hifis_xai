@@ -1,0 +1,13 @@
+ENV/
+wandb/
+*.csv
+*.xlsx
+*.xls
+*.pyc
+*.pt
+*.ckpt
+*.pkl
+*.npy
+*.png
+*.zip
+*.rar
