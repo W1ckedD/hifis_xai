@@ -165,11 +165,10 @@ Before training, the data must be preprocessed to ensure it is suitable for mode
 
 1. Dropping undesired features and merging the main data with lookup tables.
 2. Modifying rows where the client's citizenship status is not "Canadian citizen" or the veteran status is "Canadian Armed Forces."
-3. Merging consecutive visits where the client was automatically discharged and immediately readmitted to the shelter.
-4. Applying one-hot encoding to categorical features.
-5. Implementing the Extending and Sliding Window algorithms.
-6. Calculating Ground Truth values.
-7. Saving the processed data.
+3. Applying one-hot encoding to categorical features.
+4. Implementing the Extending and Sliding Window algorithms.
+5. Calculating Ground Truth values.
+6. Saving the processed data.
 
 
 Please note that since the task is to predict the number of nights a client is likely to spend at a shelter within the next 6 months, it is necessary to have at least 6 months of future data on client stays to calculate the ground truth for training. Therefore, the most recent 6 months of HIFIS data cannot be used for training, as the ground truth for this period cannot be determined.
