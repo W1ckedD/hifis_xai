@@ -164,7 +164,7 @@ Please ensure that you set up the required files and configure their paths corre
 Before training, the data must be preprocessed to ensure it is suitable for model training. The preprocessing step includes the following:
 
 1. Dropping undesired features and merging the main data with lookup tables.
-2. Modifying rows where the client's citizenship status is not "Canadian citizen" or the veteran status is "Canadian Armed Forces."
+2. Modifying rows where the client's citizenship status is not "Canadian citizen" but the veteran status is "Canadian Armed Forces."
 3. Applying one-hot encoding to categorical features.
 4. Implementing the Extending and Sliding Window algorithms.
 5. Calculating Ground Truth values.
